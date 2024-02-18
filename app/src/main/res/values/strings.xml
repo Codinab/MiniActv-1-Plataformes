@@ -2,4 +2,15 @@
     <string name="app_name">TestAccelerometreKotlin</string>
     <string name="shake">Shake to get a toast and to switch color</string>
     <string name="shuffed">Device was shuffed</string>
+    <string name="shake_message">Shake to get a toast and to switch color</string>
+    <string name="low">LOW</string>
+    <string name="medium">MEDIUM</string>
+    <string name="high">HIGH</string>
+    <string name="intensity"> Intensity</string>
+    <string name="new_light_value">New value light sensor</string>
+    <string name="no_light"> Sorry, there is no light sensor</string>
+    <string name="no_accelerometer"> Sorry, there is no accelerometer</string>
+    <string name="light_detected"> Light sensor detected. Max range:</string>
+    <string name="lx"> lx</string>
+
 </resources>
