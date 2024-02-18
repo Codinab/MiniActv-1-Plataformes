@@ -68,8 +68,6 @@ class TestAccelerometreActivity : AppCompatActivity(), SensorEventListener {
         bottomTextContainer = binding.bottomTextContainer
 
 
-
-
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         sensorsDetection()
@@ -92,19 +90,20 @@ class TestAccelerometreActivity : AppCompatActivity(), SensorEventListener {
         val lightValue = event.values[0]
         val currentTime = System.currentTimeMillis()
 
-        // Use thresholds based on lightSensorMaxRange to categorize intensity
-        val lowThreshold = lightSensorMaxRange / 3
-        val highThreshold = 2 * lightSensorMaxRange / 3
-        val intensity = when {
-            lightValue < lowThreshold -> getString(R.string.low) // Retrieve string value
-            lightValue < highThreshold -> getString(R.string.medium) // Retrieve string value
-            else -> getString(R.string.high) // Retrieve string value
-        }
+        if (currentTime - lastLightSensorUpdate > LIGHT_SENSOR_UPDATE_TIME) {
 
-        // Update only if significant time has passed or value has changed significantly
-        if (currentTime - lastLightSensorUpdate > ACCELEROMETER_UPDATE_TIME || Math.abs(lastLightSensorValue - lightValue) > 200) {
+            // Use thresholds based on lightSensorMaxRange to categorize intensity
+            val lowThreshold = lightSensorMaxRange / 3
+            val highThreshold = 2 * lightSensorMaxRange / 3
+            val intensity = when {
+                lightValue < lowThreshold -> getString(R.string.low)
+                lightValue < highThreshold -> getString(R.string.medium)
+                else -> getString(R.string.high)
+            }
+
             lastLightSensorUpdate = currentTime
             lastLightSensorValue = lightValue
+
             bottomViewAddText(
                 "${getString(R.string.new_light_value)} = $lightValue lx" +
                     "\n$intensity ${getString(R.string.intensity)}"
@@ -246,5 +245,6 @@ class TestAccelerometreActivity : AppCompatActivity(), SensorEventListener {
     companion object {
         private const val MIN_ACCELERATION = 1.1f
         private const val ACCELEROMETER_UPDATE_TIME = 1000
+        private const val LIGHT_SENSOR_UPDATE_TIME = 1000
     }
 }
